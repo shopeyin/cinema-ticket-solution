@@ -23,20 +23,6 @@ This service handles ticket purchasing logic for a cinema booking system. It val
 
 ---
 
-## 🗂️ Project Structure
-cinema-ticket-solution/
-├── cinema-tickets-javascript/
-│ ├── src/
-│ │ ├── lib/
-│ │ ├── thirdparty/
-│ │ ├── TicketService.js
-│ │ └── index.js <-- Entry point
-│ ├── tests/ <-- (If tests exist)
-│ ├── package.json
-│ └── README.md
-
-
----
 
 ## ⚙️ Installation & Setup
 
@@ -45,28 +31,36 @@ cinema-ticket-solution/
 ```bash
 git clone https://github.com/shopeyin/cinema-ticket-solution.git
 cd cinema-ticket-solution/cinema-tickets-javascript
-
-2. Install dependencies
+```
+### 2. Install dependencies
 
 ```bash
 npm install
+```
 
-▶️ Running the Service
+### 3. ▶️ Running the Service
+```bash
 cd src
 node index.js
+```
+---
 
+## 🧪 Running Tests
 
-🧪 Running Tests
-1. Install Jest (if not already)
+### 1. Install Jest (if not already)
+```bash
 npm install --save-dev jest
+```
+### 2. Add a test script in package.json
 
-2. Add a test script in package.json
-
+```bash
 "scripts": {
   "test": "jest"
 }
+```
 
-3. Run the tests
+### 3. Run the tests
+```bash
 npm test
-
+```
 
