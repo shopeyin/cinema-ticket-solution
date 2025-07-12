@@ -12,19 +12,21 @@ This service handles ticket purchasing logic for a cinema booking system. It val
 
 ## ✅ Business Rules Enforced
 
-- Maximum of **25 tickets** per transaction  
-- **At least 1 adult ticket** is required for any purchase  
-- **Child tickets** must be accompanied by **at least 1 adult ticket**  
-- **Each infant** must be paired with **one adult** (infants do not require a seat)  
+- Maximum of **25 tickets** per transaction
+- **At least 1 adult ticket** is required for any purchase
+- **Child tickets** must be accompanied by **at least 1 adult ticket**
+- **Each infant** must be paired with **one adult** (infants do not require a seat)
 - Ticket pricing:
-  - Adult: £25  
-  - Child: £15  
-  - Infant: £0  
+  - Adult: £25
+  - Child: £15
+  - Infant: £0
 
 ---
+
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js v14+
 - npm v6+
 
@@ -35,9 +37,11 @@ This service handles ticket purchasing logic for a cinema booking system. It val
 ```bash
 git clone https://github.com/shopeyin/cinema-ticket-solution.git
 ```
+
 ```bash
 cd cinema-ticket-solution/cinema-tickets-javascript
 ```
+
 ### 2. Install dependencies
 
 ```bash
@@ -45,18 +49,25 @@ npm install
 ```
 
 ### 3. ▶️ Running the Service
+
 ```bash
 cd src
+```
+
+```bash
 node index.js
 ```
+
 ---
 
 ## 🧪 Running Tests
 
 ### 1. Install Jest (if not already)
+
 ```bash
 npm install --save-dev jest
 ```
+
 ### 2. Add a test script in package.json
 
 ```bash
@@ -66,7 +77,7 @@ npm install --save-dev jest
 ```
 
 ### 3. Run the tests
+
 ```bash
 npm test
 ```
-
