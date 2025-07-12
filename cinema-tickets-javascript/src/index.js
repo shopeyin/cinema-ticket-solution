@@ -15,18 +15,18 @@ const ticketService = new TicketService(
 );
 
 
-const t1 = new TicketTypeRequest("ADULT", 20);
-const t2 = new TicketTypeRequest("CHILD", 1);
-const t3 = new TicketTypeRequest("INFANT", 4);
+const t1 = new TicketTypeRequest("ADULT",1);
+const t2 = new TicketTypeRequest("CHILD", 10);
+const t3 = new TicketTypeRequest("INFANT", 1);
 
 try {
   const { totalAmount, totalSeats, totalTickets } =
-    ticketService.purchaseTickets(1, t1, t2, t3);
+    ticketService.purchaseTickets(2,t1,t2, t3);
 
   console.log("✅ Tickets purchased successfully!");
   console.log("💰 Total amount to pay:", totalAmount);
-  console.log("🪑 Total seats to reserve:", totalSeats);
-  console.log(" Total tickets to reserve:", totalTickets);
+  console.log("🪑 Total SEATS to reserve:", totalSeats);
+  console.log(" Total TICKETS to reserve:", totalTickets);
 } catch (error) {
   console.error(
     "\n===================== ❌ An error occurred ====================="

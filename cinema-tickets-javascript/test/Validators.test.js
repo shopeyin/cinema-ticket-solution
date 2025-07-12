@@ -1,31 +1,33 @@
-import InvalidAccountIDException from "../src/pairtest/lib/InvalidAccountException";
-import InvalidPurchaseException from "../src/pairtest/lib/InvalidPurchaseException";
-import TicketValidator from "../src/pairtest/lib/TicketValidator";
+import InvalidAccountIDException from "../src/pairtest/lib/errorHandling/InvalidAccountIDException";
+import InvalidPurchaseException from "../src/pairtest/lib/errorHandling/InvalidPurchaseException";
+import AccountValidator from "../src/pairtest/lib/validators/AccountValidator";
+import PriceValidator from "../src/pairtest/lib/validators/PriceValidator";
+import TicketRulesValidator from "../src/pairtest/lib/validators/TicketRulesValidator";
 
-describe("TicketValidator", () => {
+describe("Validators", () => {
   describe("validateAccountId", () => {
     it("should accept positive integer account IDs", () => {
-      expect(() => TicketValidator.validateAccountId(1)).not.toThrow();
-      expect(() => TicketValidator.validateAccountId(100)).not.toThrow();
+      expect(() => AccountValidator.validateAccountId(1)).not.toThrow();
+      expect(() => AccountValidator.validateAccountId(100)).not.toThrow();
     });
 
     it("should reject non-integer account IDs", () => {
-      expect(() => TicketValidator.validateAccountId("1")).toThrow(
+      expect(() => AccountValidator.validateAccountId("1")).toThrow(
         InvalidAccountIDException
       );
-      expect(() => TicketValidator.validateAccountId(1.5)).toThrow(
+      expect(() => AccountValidator.validateAccountId(1.5)).toThrow(
         InvalidAccountIDException
       );
-      expect(() => TicketValidator.validateAccountId(null)).toThrow(
+      expect(() => AccountValidator.validateAccountId(null)).toThrow(
         InvalidAccountIDException
       );
     });
 
     it("should reject zero or negative account IDs", () => {
-      expect(() => TicketValidator.validateAccountId(0)).toThrow(
+      expect(() => AccountValidator.validateAccountId(0)).toThrow(
         InvalidAccountIDException
       );
-      expect(() => TicketValidator.validateAccountId(-1)).toThrow(
+      expect(() => AccountValidator.validateAccountId(-1)).toThrow(
         InvalidAccountIDException
       );
     });
@@ -38,7 +40,7 @@ describe("TicketValidator", () => {
         INFANT: null,
       };
 
-      expect(() => TicketValidator.validatePrices(invalidPrices)).toThrow(
+      expect(() => PriceValidator.validatePrice(invalidPrices)).toThrow(
         "must be a non-negative integer"
       );
     });
@@ -50,7 +52,7 @@ describe("TicketValidator", () => {
         INFANT: 0,
       };
 
-      expect(() => TicketValidator.validatePrices(validPrices)).not.toThrow();
+      expect(() => PriceValidator.validatePrice(validPrices)).not.toThrow();
     });
   });
 
@@ -73,7 +75,7 @@ describe("TicketValidator", () => {
 
           validCases.forEach((testCase) => {
             expect(() =>
-              TicketValidator.validateTicketRules(testCase)
+              TicketRulesValidator.validateTicket(testCase)
             ).not.toThrow();
           });
         });
@@ -90,7 +92,7 @@ describe("TicketValidator", () => {
           invalidCases.forEach((testCase) => {
             const calculatedTotal =
               testCase.adultCount + testCase.childCount + testCase.infantCount;
-            expect(() => TicketValidator.validateTicketRules(testCase)).toThrow(
+            expect(() => TicketRulesValidator.validateTicket(testCase)).toThrow(
               new InvalidPurchaseException(
                 `Ticket count mismatch: expected ${calculatedTotal} but got ${testCase.totalTickets}`
               )
@@ -100,7 +102,7 @@ describe("TicketValidator", () => {
 
         it("should reject more than 25 tickets", () => {
           expect(() =>
-            TicketValidator.validateTicketRules({
+            TicketRulesValidator.validateTicket({
               adultCount: 26,
               childCount: 0,
               infantCount: 0,
@@ -111,7 +113,7 @@ describe("TicketValidator", () => {
 
         it("should reject purchases with no adults", () => {
           expect(() =>
-            TicketValidator.validateTicketRules({
+            TicketRulesValidator.validateTicket({
               adultCount: 0,
               childCount: 1,
               infantCount: 0,
@@ -119,11 +121,10 @@ describe("TicketValidator", () => {
             })
           ).toThrow("At least one adult ticket must be purchased.");
         });
-       
 
         it("should reject infants exceeding adults", () => {
           expect(() =>
-            TicketValidator.validateTicketRules({
+            TicketRulesValidator.validateTicket({
               adultCount: 1,
               childCount: 0,
               infantCount: 2,

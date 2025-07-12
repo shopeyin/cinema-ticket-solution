@@ -1,5 +1,11 @@
-import InvalidPurchaseException from "./lib/InvalidPurchaseException.js";
-import TicketValidator from "./lib/TicketValidator.js";
+// import InvalidPurchaseException from "./lib/InvalidPurchaseException.js";
+// import TicketValidator from "./lib/TicketValidator.js";
+// import AccountValidator from "./lib/AccountValidator.js";
+// import PriceValidator from "./lib/PriceValidator.js";
+
+import AccountValidator from "./lib/validators/AccountValidator.js";
+import PriceValidator from "./lib/validators/PriceValidator.js";
+import TicketRulesValidator from "./lib/validators/TicketRulesValidator.js";
 
 export default class TicketService {
   #paymentService;
@@ -7,7 +13,7 @@ export default class TicketService {
   #ticketPrices;
 
   constructor(paymentService, reservationService, ticketPrices) {
-    TicketValidator.validatePrices(ticketPrices);
+    PriceValidator.validatePrice(ticketPrices);
 
     this.#paymentService = paymentService;
     this.#reservationService = reservationService;
@@ -15,8 +21,7 @@ export default class TicketService {
   }
 
   purchaseTickets(accountId, ...ticketTypeRequests) {
-    TicketValidator.validateAccountId(accountId);
-
+    AccountValidator.validateAccountId(accountId);
     const {
       totalAmount,
       totalSeats,
@@ -26,7 +31,7 @@ export default class TicketService {
       infantCount,
     } = this.#calculateTotals(ticketTypeRequests);
 
-    TicketValidator.validateTicketRules({
+    TicketRulesValidator.validateTicket({
       adultCount,
       childCount,
       infantCount,
@@ -50,10 +55,6 @@ export default class TicketService {
     for (const ticket of ticketRequests) {
       const type = ticket.getTicketType();
       const count = ticket.getNoOfTickets();
-
-      if (!this.#ticketPrices.hasOwnProperty(type)) {
-        throw new InvalidPurchaseException(`Unknown ticket type: ${type}`);
-      }
 
       totalAmount += count * this.#ticketPrices[type];
 

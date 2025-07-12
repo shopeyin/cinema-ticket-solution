@@ -2,8 +2,9 @@ import { jest } from "@jest/globals";
 import { TICKET_PRICES } from "../src/pairtest/lib/ticketPrices";
 import TicketTypeRequest from "../src/pairtest/lib/TicketTypeRequest";
 import TicketService from "../src/pairtest/TicketService";
-import InvalidAccountIDException from "../src/pairtest/lib/InvalidAccountException";
-import InvalidPurchaseException from "../src/pairtest/lib/InvalidPurchaseException";
+
+import InvalidPurchaseException from "../src/pairtest/lib/errorHandling/InvalidPurchaseException";
+import InvalidAccountIDException from "../src/pairtest/lib/errorHandling/InvalidAccountIDException";
 
 // Mock Serices
 const mockPaymentService = {
@@ -73,7 +74,6 @@ describe("TicketService", () => {
       );
       expect(result.totalSeats).toBe(3);
     });
-
 
     it("should throw error for unknown ticket type", () => {
       const invalidTicket = {
