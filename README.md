@@ -22,7 +22,11 @@ This service handles ticket purchasing logic for a cinema booking system. It val
   - Infant: £0  
 
 ---
+## 🚀 Getting Started
 
+### Prerequisites
+- Node.js v14+
+- npm v6+
 
 ## ⚙️ Installation & Setup
 
