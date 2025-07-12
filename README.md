@@ -34,6 +34,8 @@ This service handles ticket purchasing logic for a cinema booking system. It val
 
 ```bash
 git clone https://github.com/shopeyin/cinema-ticket-solution.git
+```
+```bash
 cd cinema-ticket-solution/cinema-tickets-javascript
 ```
 ### 2. Install dependencies
