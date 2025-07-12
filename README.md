@@ -1,4 +1,4 @@
-# Cinema Ticket Purchasing System
+# Cinema Ticket Service
 
 A Node.js implementation of a ticket service adhering to DWP's business rules for cinema ticket purchases.
 
@@ -15,3 +15,11 @@ A Node.js implementation of a ticket service adhering to DWP's business rules fo
 ✔ Child tickets require at least one Adult ticket  
 ✔ Correct pricing: Adult (£25), Child (£15), Infant (£0)  
 ✔ Proper seat allocation (Infants don't occupy seats)
+
+## ⚙️ Installation
+
+1. **Clone the Repository**  
+   ```bash
+   git clone https://github.com/shopeyin/cinema-ticket-solution.git
+   cd cinema-ticket-service
+   npm install
