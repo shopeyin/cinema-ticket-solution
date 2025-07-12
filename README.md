@@ -1,6 +1,6 @@
 # 🎟️ Cinema Ticket Service
 
-A Node.js implementation of a cinema ticket service adhering to DWP's business rules for safe and consistent ticket purchases.
+A Node.js implementation of a cinema ticket service.
 
 ---
 
