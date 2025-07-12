@@ -2,7 +2,6 @@ import { jest } from "@jest/globals";
 import { TICKET_PRICES } from "../src/pairtest/lib/ticketPrices";
 import TicketTypeRequest from "../src/pairtest/lib/TicketTypeRequest";
 import TicketService from "../src/pairtest/TicketService";
-
 import InvalidPurchaseException from "../src/pairtest/lib/errorHandling/InvalidPurchaseException";
 import InvalidAccountIDException from "../src/pairtest/lib/errorHandling/InvalidAccountIDException";
 
