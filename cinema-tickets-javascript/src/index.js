@@ -14,65 +14,19 @@ const ticketService = new TicketService(
   TICKET_PRICES
 );
 
-// Valid purchase
-const t1 = new TicketTypeRequest("ADULT", 2);
+
+const t1 = new TicketTypeRequest("ADULT", 20);
 const t2 = new TicketTypeRequest("CHILD", 1);
-const t3 = new TicketTypeRequest("INFANT", 1);
+const t3 = new TicketTypeRequest("INFANT", 4);
 
-//NO ADULT
-// const t1 = new TicketTypeRequest("CHILD", 3);
-// const t2 = new TicketTypeRequest("INFANT", 1);
-
-//More than 25 tickets
-// const t1 = new TicketTypeRequest("ADULT", 2);
-// const t2 = new TicketTypeRequest("CHILD", 2);
-// const t3 = new TicketTypeRequest("INFANT", 32);
-
-// INVALID ID
-//const t1 = new TicketTypeRequest("ADULT", 1);
-
-// ONLY ADULTS
-//const t1 = new TicketTypeRequest('ADULT', 3);
-
-//ONLY INFANT
-//const t10 = new TicketTypeRequest("INFANT", 2);
-
-//ONLY CHILD
-//const t1 = new TicketTypeRequest("CHILD", 2);
 try {
-  const { totalAmount, totalSeats } = ticketService.purchaseTickets(
-    1,
-    t1,
-    t2,
-    t3
-  );
+  const { totalAmount, totalSeats, totalTickets } =
+    ticketService.purchaseTickets(1, t1, t2, t3);
 
   console.log("✅ Tickets purchased successfully!");
-  console.log("💰 Total amount to pay:", totalAmount); // e.g. 2*25 + 1*15 = 65
+  console.log("💰 Total amount to pay:", totalAmount);
   console.log("🪑 Total seats to reserve:", totalSeats);
-
-  //   // NO ADULT
-  //ticketService.purchaseTickets(1, t1, t2);
-  //MORE than 25 tickets
-  //   const { totalAmount, totalSeats } = ticketService.purchaseTickets(
-  //     1,
-  //     t1,
-  //     t2,
-  //     t3
-  //   );
-  //   console.log("💰 Total amount to pay:", totalAmount);
-  // console.log("🪑 Total seats to reserve:", totalSeats);
-
-  //INVALID ID
-  //ticketService.purchaseTickets("a", t1);
-
-  //ONLY ADULTS
-  //   ticketService.purchaseTickets(10, t1);
-  //   console.log("✅ Tickets purchased successfully!");
-  //ONLY INFANT
-  // ticketService.purchaseTickets(1, t10); // ❌ Should fail
-  //ONLY CHILD
-  //ticketService.purchaseTickets(1, t1); // ❌ Should fail
+  console.log(" Total tickets to reserve:", totalTickets);
 } catch (error) {
   console.error(
     "\n===================== ❌ An error occurred ====================="

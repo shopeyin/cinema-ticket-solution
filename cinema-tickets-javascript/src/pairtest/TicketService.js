@@ -36,7 +36,7 @@ export default class TicketService {
     this.#paymentService.makePayment(accountId, totalAmount);
     this.#reservationService.reserveSeat(accountId, totalSeats);
 
-    return { totalAmount, totalSeats };
+    return { totalAmount, totalSeats, totalTickets };
   }
 
   #calculateTotals(ticketRequests) {

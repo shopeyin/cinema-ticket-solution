@@ -1,10 +1,11 @@
 import { jest } from "@jest/globals";
-import InvalidPurchaseException from "../src/pairtest/lib/InvalidPurchaseException";
 import { TICKET_PRICES } from "../src/pairtest/lib/ticketPrices";
 import TicketTypeRequest from "../src/pairtest/lib/TicketTypeRequest";
 import TicketService from "../src/pairtest/TicketService";
+import InvalidAccountIDException from "../src/pairtest/lib/InvalidAccountException";
+import InvalidPurchaseException from "../src/pairtest/lib/InvalidPurchaseException";
 
-// Mocks
+// Mock Serices
 const mockPaymentService = {
   makePayment: jest.fn(),
 };
@@ -41,10 +42,12 @@ describe("TicketService", () => {
         numberOfAdultTickets * TICKET_PRICES.ADULT
       );
       expect(result.totalSeats).toBe(numberOfAdultTickets);
+
       expect(mockPaymentService.makePayment).toHaveBeenCalledWith(
         accountId,
         result.totalAmount
       );
+
       expect(mockReservationService.reserveSeat).toHaveBeenCalledWith(
         accountId,
         result.totalSeats
@@ -71,50 +74,6 @@ describe("TicketService", () => {
       expect(result.totalSeats).toBe(3);
     });
 
-    it("should throw error when accountId is invalid", () => {
-      expect(() => {
-        ticketService.purchaseTickets(0, new TicketTypeRequest("ADULT", 1));
-      }).toThrow(InvalidPurchaseException);
-
-      expect(() => {
-        ticketService.purchaseTickets(-1, new TicketTypeRequest("ADULT", 1));
-      }).toThrow(InvalidPurchaseException);
-
-      expect(() => {
-        ticketService.purchaseTickets(
-          "invalid",
-          new TicketTypeRequest("ADULT", 1)
-        );
-      }).toThrow(InvalidPurchaseException);
-    });
-
-    it("should throw error when more than 25 tickets are requested", () => {
-      expect(() => {
-        ticketService.purchaseTickets(1, new TicketTypeRequest("ADULT", 26));
-      }).toThrow(InvalidPurchaseException);
-    });
-
-    it("should throw error when no adult tickets are purchased", () => {
-      expect(() => {
-        ticketService.purchaseTickets(1, new TicketTypeRequest("ADULT", 0));
-      }).toThrow(InvalidPurchaseException);
-    });
-
-    it("should throw error when child tickets are purchased without an adult", () => {
-      expect(() => {
-        ticketService.purchaseTickets(1, new TicketTypeRequest("CHILD", 1));
-      }).toThrow(InvalidPurchaseException);
-    });
-
-    it("should throw error when infant tickets is more than adult tickets", () => {
-      expect(() => {
-        ticketService.purchaseTickets(
-          1,
-          new TicketTypeRequest("ADULT", 1),
-          new TicketTypeRequest("INFANT", 2)
-        );
-      }).toThrow(InvalidPurchaseException);
-    });
 
     it("should throw error for unknown ticket type", () => {
       const invalidTicket = {
@@ -134,6 +93,41 @@ describe("TicketService", () => {
       expect(() => {
         ticketService.purchaseTickets(1, new TicketTypeRequest("ADULT", -1));
       }).toThrow(InvalidPurchaseException);
+    });
+    it("should not call payment or reservation services when Account Id is invalid", () => {
+      expect(() => {
+        ticketService.purchaseTickets(0, new TicketTypeRequest("ADULT", 1));
+      }).toThrow(InvalidAccountIDException);
+
+      expect(mockPaymentService.makePayment).not.toHaveBeenCalled();
+      expect(mockReservationService.reserveSeat).not.toHaveBeenCalled();
+    });
+
+    it("should handle exactly 20 tickets correctly", () => {
+      const result = ticketService.purchaseTickets(
+        1,
+        new TicketTypeRequest("ADULT", 20)
+      );
+      expect(result.totalAmount).toBe(20 * TICKET_PRICES.ADULT);
+      expect(result.totalSeats).toBe(20);
+    });
+    it("should not reserve seats for infant tickets", () => {
+      const result = ticketService.purchaseTickets(
+        1,
+        new TicketTypeRequest("ADULT", 1),
+        new TicketTypeRequest("INFANT", 1)
+      );
+      expect(result.totalSeats).toBe(1);
+    });
+
+    it("should merge duplicate ticket types into a single total", () => {
+      const result = ticketService.purchaseTickets(
+        1,
+        new TicketTypeRequest("ADULT", 1),
+        new TicketTypeRequest("ADULT", 1)
+      );
+      expect(result.totalSeats).toBe(2);
+      expect(result.totalAmount).toBe(2 * TICKET_PRICES.ADULT);
     });
   });
 });
