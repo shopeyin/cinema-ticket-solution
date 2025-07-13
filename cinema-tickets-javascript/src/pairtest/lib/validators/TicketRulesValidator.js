@@ -1,4 +1,5 @@
 // @ts-check
+
 import InvalidPurchaseException from "../errorException/InvalidPurchaseException.js";
 
 /**

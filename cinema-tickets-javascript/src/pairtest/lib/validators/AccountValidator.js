@@ -4,13 +4,13 @@ import InvalidAccountIDException from "../errorException/InvalidAccountIDExcepti
 /**
  * Validator for account IDs
  * @class
- * @implements {AccountValidator}
  */
 export default class AccountValidator {
   /**
    * Validates an account ID
-   * @param {number} accountId
-   * @throws {InvalidAccountIDException}
+   * @static
+   * @param {number} accountId 
+   * @throws {InvalidAccountIDException} 
    */
   static validateAccountId(accountId) {
     if (!Number.isInteger(accountId) || accountId <= 0) {

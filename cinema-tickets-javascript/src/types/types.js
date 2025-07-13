@@ -19,7 +19,7 @@
  */
 
 /**
- * Account validator interface
+ * Account validator 
  * @typedef {Object} AccountValidator
 * @property {function(number): void} validateAccountId
 
@@ -49,3 +49,6 @@
  * @typedef {Error} InvalidAccountIDException
  * @property {string} message - Error message
  */
+
+
+// export {}; 
