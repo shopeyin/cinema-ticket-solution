@@ -15,7 +15,7 @@ This service handles ticket purchasing logic for a cinema booking system. It val
 - Maximum of **25 tickets** per transaction
 - **At least 1 adult ticket** is required for any purchase
 - **Child tickets** must be accompanied by **at least 1 adult ticket**
-- **Infants** do not pay for a ticket and  must be paired with **one adult** (infants do not require a seat)
+- **Infants** do not pay for a ticket and must be paired with **one adult** (infants do not require a seat)
 - Ticket pricing:
   - Adult: £25
   - Child: £15
@@ -57,11 +57,17 @@ cd src
 ```bash
 node index.js
 ```
+
 ---
+
 🧠 Type Safety with JSDoc
-This project uses JSDoc with @ts-check to provide static type checking in JavaScript without TypeScript.
+
+### This project uses JSDoc with @ts-check to provide static type checking in JavaScript without TypeScript.
+
 ### 📄 Example
+
 Here's a sample from PriceValidator.js
+
 ```bash
 export default class PriceValidator {
   /**
@@ -82,6 +88,7 @@ export default class PriceValidator {
 }
 
 ```
+
 ---
 
 ## 🧪 Running Tests
