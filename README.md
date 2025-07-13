@@ -60,7 +60,7 @@ node index.js
 ---
 🧠 Type Safety with JSDoc
 This project uses JSDoc with @ts-check to provide static type checking in JavaScript without TypeScript.
-📄 Example
+### 📄 Example
 Here's a sample from PriceValidator.js
 ```bash
 export default class PriceValidator {
