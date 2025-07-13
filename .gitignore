@@ -1,8 +1,8 @@
 # Node modules
 node_modules/
 # jsdocs
-/docs/
 
+**/docs/
 # Logs
 logs
 *.log
