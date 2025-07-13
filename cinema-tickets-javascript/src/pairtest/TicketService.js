@@ -1,29 +1,12 @@
-// @ts-check
-
-import TicketPaymentService from "../thirdparty/paymentgateway/TicketPaymentService.js";
-import SeatReservationService from "../thirdparty/seatbooking/SeatReservationService.js";
 import TicketTypeRequest from "./lib/TicketTypeRequest.js";
 import AccountValidator from "./lib/validators/AccountValidator.js";
 import PriceValidator from "./lib/validators/PriceValidator.js";
 import TicketRulesValidator from "./lib/validators/TicketRulesValidator.js";
 
-/**
- * Main service for handling ticket purchases
- * @class
- */
-
 export default class TicketService {
   #paymentService;
   #reservationService;
   #ticketPrices;
-
-  /**
-   * Creates a new TicketService instance
-   * @param {TicketPaymentService} paymentService
-   * @param {SeatReservationService} reservationService
-   * @param {TicketPrices} ticketPrices
-   * @throws {TypeError} If ticket prices are invalid
-   */
 
   constructor(paymentService, reservationService, ticketPrices) {
     PriceValidator.validatePrice(ticketPrices);
@@ -31,15 +14,6 @@ export default class TicketService {
     this.#reservationService = reservationService;
     this.#ticketPrices = ticketPrices;
   }
-
-  /**
-   * Purchases tickets and handles payment and seat reservation
-   * @param {number} accountId
-   * @param {...TicketTypeRequest} ticketTypeRequests
-   * @returns {{ totalAmount: number, totalSeats: number, totalTickets: number }}
-   * @throws {InvalidPurchaseException}
-   * @throws {TypeError}
-   */
 
   purchaseTickets(accountId, ...ticketTypeRequests) {
     AccountValidator.validateAccountId(accountId);
@@ -65,18 +39,6 @@ export default class TicketService {
 
     return { totalAmount, totalSeats, totalTickets };
   }
-
-  /**
-   * @param {Array<TicketTypeRequest>} ticketRequests
-   *  * @returns {{
-   *   totalAmount: number,
-   *   totalSeats: number,
-   *   totalTickets: number,
-   *   adultCount: number,
-   *   childCount: number,
-   *   infantCount: number
-   * }}
-   */
 
   #calculateTotals(ticketRequests) {
     let totalAmount = 0;

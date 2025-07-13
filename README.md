@@ -60,37 +60,6 @@ node index.js
 
 ---
 
-🧠 Type Safety with JSDoc
-
-### This project uses JSDoc with @ts-check to provide static type checking in JavaScript without TypeScript.
-
-### 📄 Example
-
-Here's a sample from PriceValidator.js
-
-```bash
-export default class PriceValidator {
-  /**
-   * Validates ticket prices
-   * @static
-   * @param {TicketPrices} prices
-   * @throws {TypeError}
-   */
-  static validatePrice(prices) {
-    for (const [type, price] of Object.entries(prices)) {
-      if (!Number.isInteger(price) || price < 0) {
-        throw new TypeError(
-          `Invalid price for ${type}: must be a non-negative integer.`
-        );
-      }
-    }
-  }
-}
-
-```
-
----
-
 ## 🧪 Running Tests
 
 ### 1. Install Jest (if not already)

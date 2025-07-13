@@ -1,17 +1,9 @@
-// @ts-check
 
 import InvalidPurchaseException from "../errorException/InvalidPurchaseException.js";
 
-/**
- * Validator for ticket purchase rules
- * @class
- */
+
 export default class TicketRulesValidator {
-  /**
-   * @static
-   * @param {TicketValidationParams} params
-   * @throws {InvalidPurchaseException} If any validation rule fails
-   */
+
   static validateTicket(params) {
     const { adultCount, childCount, infantCount, totalTickets } = params;
     {

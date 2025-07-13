@@ -1,15 +1,10 @@
-// @ts-check
+
 import { TICKET_PRICES } from "./pairtest/lib/ticketPrices.js";
 import TicketTypeRequest from "./pairtest/lib/TicketTypeRequest.js";
 import TicketService from "./pairtest/TicketService.js";
 import TicketPaymentService from "./thirdparty/paymentgateway/TicketPaymentService.js";
 import SeatReservationService from "./thirdparty/seatbooking/SeatReservationService.js";
 
-// export const PRICES = {
-//   INFANT: "a",
-//   CHILD: 15,
-//   ADULT: 25,
-// };
 
 // Inject dependencies
 const paymentService = new TicketPaymentService();
@@ -22,9 +17,9 @@ const ticketService = new TicketService(
 );
 
 const tickets = [
-  new TicketTypeRequest("ADULT", 2),
+  new TicketTypeRequest("ADULT", 1),
   new TicketTypeRequest("CHILD", 1),
-  new TicketTypeRequest("INFANT", 1),
+  new TicketTypeRequest("INFANT", 0),
 ];
 
 try {
