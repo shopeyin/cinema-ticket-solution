@@ -1,5 +1,5 @@
-import InvalidAccountIDException from "../src/pairtest/lib/errorHandling/InvalidAccountIDException";
-import InvalidPurchaseException from "../src/pairtest/lib/errorHandling/InvalidPurchaseException";
+import InvalidAccountIDException from "../src/pairtest/lib/errorException/InvalidAccountIDException";
+import InvalidPurchaseException from "../src/pairtest/lib/errorException/InvalidPurchaseException";
 import AccountValidator from "../src/pairtest/lib/validators/AccountValidator";
 import PriceValidator from "../src/pairtest/lib/validators/PriceValidator";
 import TicketRulesValidator from "../src/pairtest/lib/validators/TicketRulesValidator";

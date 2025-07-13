@@ -6,14 +6,15 @@
     "node": ">=20.9.0"
   },
   "scripts": {
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "generate-docs": "jsdoc -c jsdoc.json"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "jest": "^30.0.4"
+    "jest": "^30.0.4",
+    "jsdoc": "^4.0.4"
   },
   "jest": {
-   
     "transform": {},
     "testEnvironment": "node"
   }
