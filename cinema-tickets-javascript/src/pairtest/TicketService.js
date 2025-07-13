@@ -33,7 +33,7 @@ export default class TicketService {
    * Purchases tickets and handles payment and seat reservation
    * @param {number} accountId
    * @param {...TicketTypeRequest} ticketTypeRequests
-   * @returns {PurchaseResult}
+    @returns {{ totalAmount: number, totalSeats: number, totalTickets: number }}
    * @throws {InvalidPurchaseException}
    * @throws {TypeError}
    */
@@ -65,7 +65,14 @@ export default class TicketService {
 
   /**
    * @param {Array<TicketTypeRequest>} ticketRequests
-   * @returns {TotalsResult}
+    *  * @returns {{
+  *   totalAmount: number,
+  *   totalSeats: number,
+  *   totalTickets: number,
+  *   adultCount: number,
+  *   childCount: number,
+  *   infantCount: number
+  * }}
    */
 
   #calculateTotals(ticketRequests) {
