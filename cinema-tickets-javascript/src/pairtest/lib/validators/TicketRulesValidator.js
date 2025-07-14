@@ -1,12 +1,16 @@
-
 import InvalidPurchaseException from "../errorException/InvalidPurchaseException.js";
 
-
 export default class TicketRulesValidator {
-
   static validateTicket(params) {
     const { adultCount, childCount, infantCount, totalTickets } = params;
     {
+    
+      if (adultCount < 0 || childCount < 0 || infantCount < 0) {
+        throw new InvalidPurchaseException(
+          "Ticket quantities must be zero or greater. Negative values are not allowed"
+        );
+      }
+
       const calculatedTotal = adultCount + childCount + infantCount;
       if (totalTickets !== calculatedTotal) {
         throw new InvalidPurchaseException(

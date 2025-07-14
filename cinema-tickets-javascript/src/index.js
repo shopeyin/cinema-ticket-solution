@@ -1,25 +1,32 @@
-
+import TicketCalculator from "./pairtest/lib/TicketCalculator.js";
 import { TICKET_PRICES } from "./pairtest/lib/ticketPrices.js";
 import TicketTypeRequest from "./pairtest/lib/TicketTypeRequest.js";
+import AccountValidator from "./pairtest/lib/validators/AccountValidator.js";
+import PriceValidator from "./pairtest/lib/validators/PriceValidator.js";
+import TicketRulesValidator from "./pairtest/lib/validators/TicketRulesValidator.js";
 import TicketService from "./pairtest/TicketService.js";
 import TicketPaymentService from "./thirdparty/paymentgateway/TicketPaymentService.js";
 import SeatReservationService from "./thirdparty/seatbooking/SeatReservationService.js";
 
-
 // Inject dependencies
 const paymentService = new TicketPaymentService();
 const reservationService = new SeatReservationService();
+const calculator = new TicketCalculator(TICKET_PRICES);
 
-const ticketService = new TicketService(
+const ticketService = new TicketService({
   paymentService,
   reservationService,
-  TICKET_PRICES
-);
+  calculator,
+  accountValidator: AccountValidator,
+  priceValidator: PriceValidator,
+  ticketRulesValidator: TicketRulesValidator,
+  ticketPrices: TICKET_PRICES,
+});
 
 const tickets = [
-  new TicketTypeRequest("ADULT", 1),
+  new TicketTypeRequest("ADULT", 10),
   new TicketTypeRequest("CHILD", 1),
-  new TicketTypeRequest("INFANT", 0),
+  new TicketTypeRequest("INFANT", 1),
 ];
 
 try {

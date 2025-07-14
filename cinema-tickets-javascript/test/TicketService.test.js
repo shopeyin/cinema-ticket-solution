@@ -4,6 +4,10 @@ import TicketTypeRequest from "../src/pairtest/lib/TicketTypeRequest";
 import TicketService from "../src/pairtest/TicketService";
 import InvalidPurchaseException from "../src/pairtest/lib/errorException/InvalidPurchaseException";
 import InvalidAccountIDException from "../src/pairtest/lib/errorException/InvalidAccountIDException";
+import AccountValidator from "../src/pairtest/lib/validators/AccountValidator";
+import PriceValidator from "../src/pairtest/lib/validators/PriceValidator";
+import TicketRulesValidator from "../src/pairtest/lib/validators/TicketRulesValidator";
+import TicketCalculator from "../src/pairtest/lib/TicketCalculator";
 
 // Mock Serices
 const mockPaymentService = {
@@ -20,11 +24,18 @@ describe("TicketService", () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    ticketService = new TicketService(
-      mockPaymentService,
-      mockReservationService,
-      TICKET_PRICES
-    );
+    const calculator = new TicketCalculator(TICKET_PRICES);
+
+
+    ticketService = new TicketService({
+      paymentService: mockPaymentService,
+      reservationService: mockReservationService,
+      calculator,
+      accountValidator: AccountValidator,
+      priceValidator: PriceValidator,
+      ticketRulesValidator: TicketRulesValidator,
+      ticketPrices: TICKET_PRICES,
+    });
   });
 
   describe("purchaseTickets", () => {

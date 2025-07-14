@@ -82,6 +82,19 @@ describe("Validators", () => {
       });
 
       describe("invalid cases", () => {
+        it("should reject negative ticket counts", () => {
+          const negativeCases = [
+            { adultCount: -1, childCount: 0, infantCount: 0, totalTickets: -1 },
+            { adultCount: 0, childCount: -2, infantCount: 0, totalTickets: -2 },
+            { adultCount: -1, childCount: -1, infantCount: -1, totalTickets: -3 },
+          ];
+
+          negativeCases.forEach((testCase) => {
+            expect(() => TicketRulesValidator.validateTicket(testCase)).toThrow(
+              "Ticket quantities must be zero or greater. Negative values are not allowed"
+            );
+          });
+        });
         it("should reject mismatched ticket counts", () => {
           const invalidCases = [
             { adultCount: 2, childCount: 1, infantCount: 1, totalTickets: 1 },

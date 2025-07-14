@@ -1,83 +1,47 @@
-import TicketTypeRequest from "./lib/TicketTypeRequest.js";
-import AccountValidator from "./lib/validators/AccountValidator.js";
-import PriceValidator from "./lib/validators/PriceValidator.js";
-import TicketRulesValidator from "./lib/validators/TicketRulesValidator.js";
-
 export default class TicketService {
   #paymentService;
   #reservationService;
-  #ticketPrices;
+  #calculator;
+  #accountValidator;
+  #ticketRulesValidator;
 
-  constructor(paymentService, reservationService, ticketPrices) {
-    PriceValidator.validatePrice(ticketPrices);
+  constructor({
+    paymentService,
+    reservationService,
+    calculator,
+    accountValidator,
+    priceValidator,
+    ticketRulesValidator,
+    ticketPrices,
+  }) {
+    priceValidator.validatePrice(ticketPrices);
+
     this.#paymentService = paymentService;
     this.#reservationService = reservationService;
-    this.#ticketPrices = ticketPrices;
+    this.#calculator = calculator;
+    this.#accountValidator = accountValidator;
+    this.#ticketRulesValidator = ticketRulesValidator;
   }
 
   purchaseTickets(accountId, ...ticketTypeRequests) {
-    AccountValidator.validateAccountId(accountId);
+    this.#accountValidator.validateAccountId(accountId);
 
-    const {
-      totalAmount,
-      totalSeats,
-      totalTickets,
-      adultCount,
-      childCount,
-      infantCount,
-    } = this.#calculateTotals(ticketTypeRequests);
+    const totals = this.#calculator.calculate(ticketTypeRequests);
 
-    TicketRulesValidator.validateTicket({
-      adultCount,
-      childCount,
-      infantCount,
-      totalTickets,
+    this.#ticketRulesValidator.validateTicket({
+      adultCount: totals.adultCount,
+      childCount: totals.childCount,
+      infantCount: totals.infantCount,
+      totalTickets: totals.totalTickets,
     });
 
-    this.#paymentService.makePayment(accountId, totalAmount);
-    this.#reservationService.reserveSeat(accountId, totalSeats);
-
-    return { totalAmount, totalSeats, totalTickets };
-  }
-
-  #calculateTotals(ticketRequests) {
-    let totalAmount = 0;
-    let totalSeats = 0;
-    let totalTickets = 0;
-    let adultCount = 0;
-    let childCount = 0;
-    let infantCount = 0;
-
-    for (const ticket of ticketRequests) {
-      const type = ticket.getTicketType();
-      const count = ticket.getNoOfTickets();
-
-      totalAmount += count * this.#ticketPrices[type];
-
-      switch (type) {
-        case "ADULT":
-          totalSeats += count;
-          adultCount += count;
-          break;
-        case "CHILD":
-          totalSeats += count;
-          childCount += count;
-          break;
-        case "INFANT":
-          infantCount += count;
-          break;
-      }
-
-      totalTickets += count;
-    }
+    this.#paymentService.makePayment(accountId, totals.totalAmount);
+    this.#reservationService.reserveSeat(accountId, totals.totalSeats);
 
     return {
-      totalAmount,
-      totalSeats,
-      totalTickets,
-      adultCount,
-      childCount,
-      infantCount,
+      totalAmount: totals.totalAmount,
+      totalSeats: totals.totalSeats,
+      totalTickets: totals.totalTickets,
     };
   }
 }
