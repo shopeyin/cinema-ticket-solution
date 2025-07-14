@@ -24,7 +24,7 @@ const ticketService = new TicketService({
 });
 
 const tickets = [
-  new TicketTypeRequest("ADULT", 10),
+  new TicketTypeRequest("ADULT", 2),
   new TicketTypeRequest("CHILD", 1),
   new TicketTypeRequest("INFANT", 1),
 ];
@@ -32,7 +32,8 @@ const tickets = [
 try {
   const { totalAmount, totalSeats, totalTickets } =
     ticketService.purchaseTickets(1, ...tickets);
-
+  
+  
   console.log("✅ Tickets purchased successfully!");
   console.log("💰 Total amount to pay:", totalAmount);
   console.log("🪑 Total SEATS to reserve:", totalSeats);
